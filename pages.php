@@ -353,7 +353,7 @@ $regolamentotesto = '
 
 $arr = explode("\n", $regolamentotesto);
 foreach ($arr as $key => $value) {
-    $arr[$key] = '        ' . $arr[$key];
+    $arr[$key] = '        '.$arr[$key];
 }
 $regolamento2 = implode("\n", $arr);
 
@@ -667,4 +667,3 @@ $normsection = '    <!-- Sezione regolamento -->
         </div>
     </section>
 ';
-?>
