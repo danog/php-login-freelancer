@@ -1,8 +1,8 @@
 <?php
 
-ini_set("log_errors", 1);
-ini_set("error_log", "/tmp/php-error.log");
-error_log( "Hello, errors!" );
+ini_set('log_errors', 1);
+ini_set('error_log', '/tmp/php-error.log');
+error_log('Hello, errors!');
 include 'db_connect.php';
 include 'functions.php';
 include 'pages.php';
@@ -10,102 +10,99 @@ include 'pages.php';
 // Inserisci in questo punto il codice per la connessione al DB e l'utilizzo delle varie funzioni.
 sec_session_start();
 echo $headbase;
-if(login_check($mysqli) == true) {
- $curuser = $_SESSION['username'];
- include 'pages.php';
- 
-
- if ($curuser == "admin") {
-  echo $admin;
-  $space = "                                ";
-  $fs = "    ";
-  $tds = array("del", "passchange", "regolamento", "liberatoria", "corso", "email", "nome", "datadinascita", "luogodinascita", "residenza", "via", "cap", "n", "numero", "cf", "data", "printlib", "printiscr"); 
+if (login_check($mysqli) == true) {
+    $curuser = $_SESSION['username'];
+    include 'pages.php';
 
 
-  $th = "$space$fs$fs<th><b>Nome utente</b></th>\n";
-  $tddel = "$space$fs$fs<td><b>Elimina utente</b></td>\n";
-  $tdpasschange = "$space$fs$fs<td><b>Cambia password</b></td>\n";
-  $tdregolamento = "$space$fs$fs<td><b>Regolamento</b></td>\n";
-  $tdnome = "$space$fs$fs<td><b>Nome e Cognome</b></td>\n";
-  $tdemail = "$space$fs$fs<td><b>Email</b></td>\n";
-  $tddatadinascita = "$space$fs$fs<td><b>Data di nascita</b></td>\n";
-  $tdluogodinascita = "$space$fs$fs<td><b>Luogo di nascita</b></td>\n";
-  $tdresidenza = "$space$fs$fs<td><b>Luogo di residenza</b></td>\n";
-  $tdvia = "$space$fs$fs<td><b>Via</b></td>\n";
-  $tdcap = "$space$fs$fs<td><b>C.A.P</b></td>\n";
-  $tdn = "$space$fs$fs<td><b>Numero</b></td>\n";
-  $tdnumero = "$space$fs$fs<td><b>Numero di telefono</b></td>\n";
-  $tdcf = "$space$fs$fs<td><b>Codice fiscale</b></td>\n";
-  $tddata = "$space$fs$fs<td><b>Data di iscrizione</b></td>\n";
-  $tdcorso = "$space$fs$fs<td><b>Corso</b></td>\n";
-  $tdliberatoria = "$space$fs$fs<td><b>Liberatoria</b></td>\n";
-  $tdprintiscr = "$space$fs$fs<td><b>Stampa regolamento</b></td>\n";
-  $tdprintlib = "$space$fs$fs<td><b>Stampa liberatoria</b></td>\n";
+    if ($curuser == 'admin') {
+        echo $admin;
+        $space = '                                ';
+        $fs = '    ';
+        $tds = ['del', 'passchange', 'regolamento', 'liberatoria', 'corso', 'email', 'nome', 'datadinascita', 'luogodinascita', 'residenza', 'via', 'cap', 'n', 'numero', 'cf', 'data', 'printlib', 'printiscr'];
 
-  $result = mysqli_query($mysqli,"SELECT * FROM `secure_login`.`members`");
-  while($row = mysqli_fetch_array($result))
-  {
-  $user = $row['username'];
-  if($user != "admin") {
-   $del = "<input class=\"btn\"  type=\"button\" name=\"delete\" onClick=\"deleteuser('$user')\" value=\"Elimina\">\n";
 
-   $passchange = "<input class=\"form-control\" type=\"password\" name=\"newname\" id=\"".$user."pass\" Placeholder=\"Nuova password\"><input type=\"button\" onClick=\"changeuserpass('$user')\" name=\"newname\" class=\"btn\" value=\"Cambia password\">";
-   $regolamento = "";
-   $nome = "";
-   $email = "";
-   $datadinascita = "";
-   $luogodinascita = "";
-   $residenza = "";
-   $via = "";
-   $cap = "";
-   $n = "";
-   $numero = "";
-   $cf = "";
-   $data = "";
-   $corso = "";
-   $liberatoria = "";
-   $printlib = "";
-   $printiscr = "";
-   $u = $row['loggedin'] + $u;
-   if($row['regolamento'] == "1") {
-    
-    $regolamento = "&#x2713;";
-    $nome = $row['name'];
-    $email = $row['email'];
-    $datadinascita = $row['nascita'];
-    $luogodinascita = $row['luogodinascita'];
-    $residenza = $row['residenza'];
-    $via = $row['via'];
-    $cap = $row['cap'];
-    $n = $row['numero'];
-    $numero = $row['phone'];
-    $cf = $row['cf'];
-    $data = $row['date'];
-    $printlib = "<input type=\"button\" class=\"btn\" id=\"$user\" onClick=\"printDiv('lib')\" name=\"newname\" value=\"Stampa liberatoria\">";
-    $printiscr = "<input type=\"button\" class=\"btn\" onClick=\"printiscr('$user')\" name=\"newname\" value=\"Stampa modulo di iscrizione\">";
-    if($row['corso'] == "1") {
-     $corso = "base";
-    } elseif($row['corso'] == "2") {
-     $corso = "fantasy";
-    };
-    if($row['liberatoria'] == "1") {
-     $liberatoria = "&#x2713;";
-    } else {
-     $liberatoria = "&#x2717;";
-    };
-   } else {
-    $regolamento = "&#x2717;";
-   };//End of regolamento exclusion
+        $th = "$space$fs$fs<th><b>Nome utente</b></th>\n";
+        $tddel = "$space$fs$fs<td><b>Elimina utente</b></td>\n";
+        $tdpasschange = "$space$fs$fs<td><b>Cambia password</b></td>\n";
+        $tdregolamento = "$space$fs$fs<td><b>Regolamento</b></td>\n";
+        $tdnome = "$space$fs$fs<td><b>Nome e Cognome</b></td>\n";
+        $tdemail = "$space$fs$fs<td><b>Email</b></td>\n";
+        $tddatadinascita = "$space$fs$fs<td><b>Data di nascita</b></td>\n";
+        $tdluogodinascita = "$space$fs$fs<td><b>Luogo di nascita</b></td>\n";
+        $tdresidenza = "$space$fs$fs<td><b>Luogo di residenza</b></td>\n";
+        $tdvia = "$space$fs$fs<td><b>Via</b></td>\n";
+        $tdcap = "$space$fs$fs<td><b>C.A.P</b></td>\n";
+        $tdn = "$space$fs$fs<td><b>Numero</b></td>\n";
+        $tdnumero = "$space$fs$fs<td><b>Numero di telefono</b></td>\n";
+        $tdcf = "$space$fs$fs<td><b>Codice fiscale</b></td>\n";
+        $tddata = "$space$fs$fs<td><b>Data di iscrizione</b></td>\n";
+        $tdcorso = "$space$fs$fs<td><b>Corso</b></td>\n";
+        $tdliberatoria = "$space$fs$fs<td><b>Liberatoria</b></td>\n";
+        $tdprintiscr = "$space$fs$fs<td><b>Stampa regolamento</b></td>\n";
+        $tdprintlib = "$space$fs$fs<td><b>Stampa liberatoria</b></td>\n";
+
+        $result = mysqli_query($mysqli, 'SELECT * FROM `secure_login`.`members`');
+        while ($row = mysqli_fetch_array($result)) {
+            $user = $row['username'];
+            if ($user != 'admin') {
+                $del = "<input class=\"btn\"  type=\"button\" name=\"delete\" onClick=\"deleteuser('$user')\" value=\"Elimina\">\n";
+
+                $passchange = '<input class="form-control" type="password" name="newname" id="'.$user."pass\" Placeholder=\"Nuova password\"><input type=\"button\" onClick=\"changeuserpass('$user')\" name=\"newname\" class=\"btn\" value=\"Cambia password\">";
+                $regolamento = '';
+                $nome = '';
+                $email = '';
+                $datadinascita = '';
+                $luogodinascita = '';
+                $residenza = '';
+                $via = '';
+                $cap = '';
+                $n = '';
+                $numero = '';
+                $cf = '';
+                $data = '';
+                $corso = '';
+                $liberatoria = '';
+                $printlib = '';
+                $printiscr = '';
+                $u = $row['loggedin'] + $u;
+                if ($row['regolamento'] == '1') {
+                    $regolamento = '&#x2713;';
+                    $nome = $row['name'];
+                    $email = $row['email'];
+                    $datadinascita = $row['nascita'];
+                    $luogodinascita = $row['luogodinascita'];
+                    $residenza = $row['residenza'];
+                    $via = $row['via'];
+                    $cap = $row['cap'];
+                    $n = $row['numero'];
+                    $numero = $row['phone'];
+                    $cf = $row['cf'];
+                    $data = $row['date'];
+                    $printlib = "<input type=\"button\" class=\"btn\" id=\"$user\" onClick=\"printDiv('lib')\" name=\"newname\" value=\"Stampa liberatoria\">";
+                    $printiscr = "<input type=\"button\" class=\"btn\" onClick=\"printiscr('$user')\" name=\"newname\" value=\"Stampa modulo di iscrizione\">";
+                    if ($row['corso'] == '1') {
+                        $corso = 'base';
+                    } elseif ($row['corso'] == '2') {
+                        $corso = 'fantasy';
+                    }
+                    if ($row['liberatoria'] == '1') {
+                        $liberatoria = '&#x2713;';
+                    } else {
+                        $liberatoria = '&#x2717;';
+                    }
+                } else {
+                    $regolamento = '&#x2717;';
+                }//End of regolamento exclusion
 
    $th = "$th$space$fs$fs<th>$user</th>\n";
 
-   foreach ($tds as $value) {
-    $td = "td$value";
-    ${$td} = "${$td}$space$fs$fs<td id=\"$user$value\">${$value}</td>\n";
-   };
-
-  };//End of admin exclusion
-  };//End of loop
+                foreach ($tds as $value) {
+                    $td = "td$value";
+                    ${$td} = "${$td}$space$fs$fs<td id=\"$user$value\">${$value}</td>\n";
+                }
+            }//End of admin exclusion
+        }//End of loop
 
   echo "$space$fs<tr>
 $th
@@ -113,18 +110,18 @@ $space$fs</tr>
 $space</thead>
 $space<tbody>
 ";
-  foreach ($tds as $value) {
-   $td = "td$value";
-   echo "$space$fs<tr>\n${$td}$space$fs</tr>\n";
-  };
-  if($u == "1"){
-   $u = "Adesso c'&egrave 1 utente online.";
-  } elseif($u == ""){
-   $u = "Adesso ci sono 0 utenti online.";
-  } else {
-   $u = "Adesso ci sono $u utenti online.";
-  };
-  echo '                                </tbody>
+        foreach ($tds as $value) {
+            $td = "td$value";
+            echo "$space$fs<tr>\n${$td}$space$fs</tr>\n";
+        }
+        if ($u == '1') {
+            $u = "Adesso c'&egrave 1 utente online.";
+        } elseif ($u == '') {
+            $u = 'Adesso ci sono 0 utenti online.';
+        } else {
+            $u = "Adesso ci sono $u utenti online.";
+        }
+        echo '                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -231,25 +228,25 @@ $space<tbody>
     </script>
 
 ';
- } else {
-  if ($st = $mysqli->prepare("SELECT regolamento FROM members WHERE username=?")) {    
-    $st->bind_param('s', $curuser); 
+    } else {
+        if ($st = $mysqli->prepare('SELECT regolamento FROM members WHERE username=?')) {
+            $st->bind_param('s', $curuser);
     // Esegui la query ottenuta.
     $st->execute();
-    $st->bind_result($regol);
-    $st->fetch();
-  };
-  error_log("regol for $curuser is $regol", 0);
-  if($regol == "0") {
-   $top = "$itop";
-   $desc = "$idesc";
-   $section = "$isection";
-  } else {
-   $top = "$normtop";
-   $desc = "$normdesc";
-   $section = "$normsection";
-  };
-  echo '
+            $st->bind_result($regol);
+            $st->fetch();
+        }
+        error_log("regol for $curuser is $regol", 0);
+        if ($regol == '0') {
+            $top = "$itop";
+            $desc = "$idesc";
+            $section = "$isection";
+        } else {
+            $top = "$normtop";
+            $desc = "$normdesc";
+            $section = "$normsection";
+        }
+        echo '
     <STYLE TYPE="text/css">
     <!--
     	@page { margin-left: 0.79in; margin-right: 0.79in; margin-top: 0.98in; margin-bottom: 0.79in }
@@ -339,11 +336,9 @@ function printDiv(divName) {
      document.body.innerHTML = originalContents;
 }
     </script>';
-
- };
- 
+    }
 } else {
- echo '
+    echo '
     <script type="text/javascript" src="sha512.js"></script>
     <script type="text/javascript" src="forms.js"></script>
     <style>
@@ -417,18 +412,16 @@ textarea:focus, input:focus {
                             </div>
                         </form>
 ';
- if(isset($_GET['error'])) { 
-  echo '
+    if (isset($_GET['error'])) {
+        echo '
                         <h2 class="text-center corsi skills">ERRORE</h2>
 ';
- };
- echo '                    </div>
+    }
+    echo '                    </div>
                 </div>
             </div>
         </div>
     </header>
 ';
- 
-};
+}
 echo $footerbase;
-?>
